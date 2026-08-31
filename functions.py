@@ -1,7 +1,8 @@
 from datetime import datetime
 
+
 from formatter import format_movies, print_table
-from mongo_connector import get_top_5_searches, save_search
+from mongo_connector import get_top_5_searches, get_last_5_uniq_searches, save_search
 from requests import (
     PAGE_SIZE,
     genre_year_count_query,
@@ -50,10 +51,12 @@ def _show_pages(cursor, query, params, total_results):
 
 def search_by_title(connection):
     """Search Sakila movies by a word or part of the title."""
-    keyword = input("Enter a movie title or keyword: ").strip().lower()
-    if not keyword:
-        print("Please enter a keyword.")
-        return
+    while True:
+        keyword = input("Enter a movie title or keyword: ").strip().lower()
+        if not keyword:
+            print("Please enter a keyword.")
+            continue
+        break
 
     params = {"keyword": keyword}
     cursor = connection.cursor()
@@ -178,3 +181,27 @@ def show_top_5_searches():
 
     print("\nTop 5 popular searches:")
     print_table(rows, ["#", "Search type", "Parameters", "Count"])
+
+
+def show_top_5_last_uniq_searches():
+    """Print the five most popular search requests from MongoDB."""
+    documents = get_last_5_uniq_searches()
+    if not documents:
+        print("No search history yet.")
+        return
+
+    rows = []
+    for index, document in enumerate(documents, start=1):
+        # search = document["_id"]
+        rows.append(
+            [
+                index,
+                document["search_type"],
+                document["params"],
+                document["results_count"],
+                document["timestamp"],
+            ]
+        )
+
+    print("\nTop 5 last uniq searches:")
+    print_table(rows, ["#", "Search type", "Parameters", "Count of movies", "Date of search"])

@@ -4,6 +4,7 @@ from functions import (
     search_by_genre_and_year,
     search_by_title,
     show_top_5_searches,
+    show_top_5_last_uniq_searches,
 )
 from local_settings import dbconfig
 from templates import GOODBYE_TEXT, MAIN_MENU
@@ -22,11 +23,13 @@ def main():
                     search_by_genre_and_year(connection)
                 elif choice == "3":
                     show_top_5_searches()
+                elif choice == "4":
+                    show_top_5_last_uniq_searches()
                 elif choice == "q":
                     print(GOODBYE_TEXT)
                     break
                 else:
-                    print("Please choose 1, 2, 3, or q.")
+                    print("Please choose 1, 2, 3, 4 or q.")
     except mysql.connector.Error as error:
         print(f"MySQL connection error: {error}")
 

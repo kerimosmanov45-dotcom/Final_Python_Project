@@ -5,6 +5,7 @@ MAIN_MENU = """
 1. Search movies by title
 2. Search movies by genre and year
 3. Show top 5 popular searches
+4. Show top 5 last uniq searches
 q. Quit
 ----------------------------------------
 Choose an option: """

@@ -130,6 +130,7 @@ python main.py
 1. Search movies by title
 2. Search movies by genre and year
 3. Show top 5 popular searches
+4. Show top 5 last uniq searches
 q. Quit
 ----------------------------------------
 Choose an option:
@@ -192,6 +193,24 @@ genre_year        {'category': 'Action', ...} 3
 
 Статистика зависит от реальной истории запросов, сохраненной в MongoDB.
 
+
+### Пример 4 — 5 последних уникальных запросов
+
+```text
+Choose an option: 4
+
+Top 5 last uniq searches:
+
+#   Search type   Parameters                         Count of movies   Date of search
+1   keyword       {'keyword': 'jx'}             0                 2026-08-31 20:07:01
+2   keyword       {'keyword': 'll'}             73                2026-08-31 19:59:45
+3   keyword       {'keyword': 'war'}            19                2026-08-31 19:57:33
+4   genre_year    {'category': 'Comedy', ...}   0                 2026-08-31 19:56:53
+5   genre_year    {'category': 'Family', ...}   2                 2026-08-31 19:06:07
+```
+
+Пункт меню `4` получает из MongoDB пять последних уникальных поисковых запросов и выводит для каждого запроса его тип, параметры, количество найденных фильмов и дату выполнения.
+
 ## 🗃 Пример записи в MongoDB
 
 После выполнения поиска приложение сохраняет документ примерно такого
@@ -217,6 +236,7 @@ genre_year        {'category': 'Action', ...} 3
 -   реализована загрузка следующих 10 результатов;
 -   каждый поиск сохраняется в MongoDB;
 -   доступен Top-5 популярных запросов;
+-   доступен Top-5 последних уникальных запросов;
 -   работа с MySQL, MongoDB и форматированием разделена по отдельным
     модулям;
 -   структура кода ориентирована на PEP8 и принцип DRY.
